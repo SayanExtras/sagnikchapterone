@@ -41,27 +41,28 @@
         #btn-mobile-shoot { background-color: #f44336; box-shadow: 0 6px 0 #b71c1c; }
         #btn-mobile-cha { background-color: #FF9800; box-shadow: 0 6px 0 #E65100; }
         #btn-mobile-jump { background-color: #4CAF50; box-shadow: 0 6px 0 #1B5E20; }
+        #btn-mobile-bou { background-color: #9C27B0; box-shadow: 0 6px 0 #6A1B9A; }
 
         /* Overlay Screens */
         .overlay-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 100; pointer-events: auto; text-align: center; padding: 20px; box-sizing: border-box; }
         #device-screen { background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); }
+        #level-select-screen { background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); display: none; }
         #start-screen { background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); display: none; }
         #defeat-screen { background: rgba(0,0,0,0.85); display: none; }
         #victory-screen { background: rgba(255, 215, 0, 0.2); backdrop-filter: blur(10px); display: none; }
+        #level3-dialog { background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); display: none; }
         
         .title-text { font-size: 4.5rem; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; }
         #defeat-title { color: #ff3333; text-shadow: 0 0 20px #ff0000; }
         #victory-title { color: #ffffff; text-shadow: 0 0 30px #FFD700, 2px 4px 5px rgba(0,0,0,0.5); }
         .story-text { color: white; font-size: 1.8rem; font-weight: bold; max-width: 800px; line-height: 1.6; margin-bottom: 40px; text-shadow: 1px 1px 4px #000; }
         
-        .action-btn { color: white; padding: 15px 40px; font-size: 2rem; border-radius: 30px; border: none; cursor: pointer; font-weight: bold; margin: 10px; width: 100%; max-width: 350px;}
+        .action-btn { color: white; padding: 15px 40px; font-size: 2rem; border-radius: 30px; border: none; cursor: pointer; font-weight: bold; margin: 10px; width: 100%; max-width: 450px;}
         .action-btn:active { transform: translateY(6px); }
         .btn-green { background: #4CAF50; box-shadow: 0 6px 0 #2E7D32; }
         .btn-blue { background: #2196F3; box-shadow: 0 6px 0 #1565C0; }
         .btn-yellow { background: #FFD700; color: #333; box-shadow: 0 6px 0 #B8860B; }
-        
-        .level-selector-box { width: 100%; max-width: 350px; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 15px; border: 2px dashed #FFD700; box-sizing: border-box; margin: 10px 0; }
-        .level-selector-box select { font-size: 1.1rem; padding: 10px; border-radius: 10px; width: 100%; font-weight: bold; background: #fff; color: #333; border: none; outline: none; cursor: pointer; touch-action: auto; pointer-events: auto; }
+        .btn-red { background: #f44336; box-shadow: 0 6px 0 #b71c1c; }
         
         /* PC D-Pad */
         #dpad { position: absolute; bottom: 40px; left: 40px; display: none; flex-direction: column; align-items: center; pointer-events: auto; user-select: none; }
@@ -91,26 +92,35 @@
 
         <div id="joystick-zone"><div id="joystick-stick"></div></div>
         <div id="mobile-actions">
-            <button id="btn-mobile-cha" class="action-circle">CHA</button>
-            <div style="display: flex; gap: 15px;"><button id="btn-mobile-shoot" class="action-circle">FIRE</button><button id="btn-mobile-jump" class="action-circle">JUMP</button></div>
+            <div style="display: flex; gap: 15px; margin-bottom: 10px;">
+                <button id="btn-mobile-bou" class="action-circle">BOU</button>
+                <button id="btn-mobile-cha" class="action-circle">CHA</button>
+            </div>
+            <div style="display: flex; gap: 15px;">
+                <button id="btn-mobile-shoot" class="action-circle">FIRE</button>
+                <button id="btn-mobile-jump" class="action-circle">JUMP</button>
+            </div>
         </div>
 
         <div id="instructions" class="instructions"></div>
     </div>
 
     <div id="device-screen" class="overlay-screen">
-        <div class="title-text" style="color: #ffffff;">GAME SETUP</div>
+        <div class="title-text" style="color: #ffffff;">SAGNIK CITY</div>
         <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
             <button class="action-btn btn-blue" onclick="window.selectDevice('pc')">PLAY ON PC</button>
-            <div class="level-selector-box">
-                <label style="color: #FFD700; font-size: 1.2rem; font-weight: bold; display:block; margin-bottom: 10px;">CHOOSE LEVEL <br><span style="color:#ff5555; font-size:0.9rem;">(Optional)</span></label>
-                <select id="level-select">
-                    <option value="1">Lvl 1 - Sagnik Got Sakti</option>
-                    <option value="2">Lvl 2 - Sagnik's Pune Controversy</option>
-                    <option value="3">Lvl 3 - Sagnik The Mountain Biker</option>
-                </select>
-            </div>
+            <button class="action-btn btn-green" onclick="window.showLevelSelect()">CHOOSE LEVEL</button>
             <button class="action-btn btn-yellow" onclick="window.selectDevice('mobile')">PLAY ON MOBILE</button>
+        </div>
+    </div>
+
+    <div id="level-select-screen" class="overlay-screen">
+        <div class="title-text" style="color: #FFD700; font-size: 3.5rem;">CHOOSE LEVEL</div>
+        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <button class="action-btn btn-blue" style="font-size: 1.5rem;" onclick="window.pickLevel(1)">Lvl 1: Sagnik Got Sakti</button>
+            <button class="action-btn btn-blue" style="font-size: 1.5rem;" onclick="window.pickLevel(2)">Lvl 2: Sagnik's Pune Controversy</button>
+            <button class="action-btn btn-blue" style="font-size: 1.5rem;" onclick="window.pickLevel(3)">Lvl 3: Sagnik Dark Tunnel Challenge</button>
+            <button class="action-btn btn-red" style="margin-top: 30px;" onclick="window.hideLevelSelect()">BACK</button>
         </div>
     </div>
 
@@ -118,6 +128,18 @@
         <div class="title-text" style="color: #FFD700;">WELCOME TO PUNE</div>
         <div class="story-text">Sagnik has lost in a City called PUNE where many monsters came to attack Sagnik. Rescue Sagnik and master the mechanics to play!</div>
         <button class="action-btn btn-green" onclick="window.startGame()">START RESCUE</button>
+    </div>
+
+    <div id="level3-dialog" class="overlay-screen">
+        <div class="title-text" style="color: #FFD700; font-size: 4rem;">ENTERING THE TUNNEL</div>
+        <div class="story-text" style="font-size: 1.6rem;">
+            Only Red, Black, and White cars can be taken down by rockets as they are Murderers, Corrupt People, and Kidnappers:<br><br>
+            <span style="color:#ffffff;">White Cars = 10 pts</span><br>
+            <span style="color:#aaaaaa;">Black Cars = 20 pts</span><br>
+            <span style="color:#ff5555;">Red Cars = 50 pts</span><br><br>
+            <span style="color: #ff3333; font-size: 2rem; text-transform: uppercase;">Taking down NPCs, Ambulances, or Police cars is a criminal offense!</span>
+        </div>
+        <button class="action-btn btn-green" onclick="window.startLevel3()">ENTER TUNNEL</button>
     </div>
 
     <div id="defeat-screen" class="overlay-screen">
@@ -133,7 +155,7 @@
     <script>
         // Prevent context menu
         window.addEventListener('contextmenu', (e) => {
-            if(e.target.tagName !== 'SELECT') e.preventDefault(); 
+            if(e.target.tagName !== 'BUTTON') e.preventDefault(); 
         });
 
         // --- Fullscreen API Logic ---
@@ -160,15 +182,18 @@
 
         // --- Game State Variables ---
         let score = 0; let currentLevel = 1; let targetScore = 300; 
+        let selectedLevelToPlay = 1; // Default selected level
         let gameHasStarted = false; let isMobileMode = false; let distanceTravelled = 0; let nextSpawnDistance = 30;
         let isDefeated = false; let isVictory = false; let isOnBike = false;
+        let lastSirenTime = 0; 
 
         const LANES = [-3.5, 0, 3.5]; let currentLane = 1; 
 
         const scoreBoard = document.getElementById('score-board'); const levelTitle = document.getElementById('level-title'); const levelDesc = document.getElementById('level-desc');
         const levelBoard = document.getElementById('level-board'); const defeatScreen = document.getElementById('defeat-screen'); const defeatTitle = document.getElementById('defeat-title');
         const victoryScreen = document.getElementById('victory-screen'); const deviceScreen = document.getElementById('device-screen'); const startScreen = document.getElementById('start-screen');
-        const warningText = document.getElementById('warning-text'); const instructionsPanel = document.getElementById('instructions'); const levelSelect = document.getElementById('level-select');
+        const warningText = document.getElementById('warning-text'); const instructionsPanel = document.getElementById('instructions'); 
+        const level3Dialog = document.getElementById('level3-dialog'); const levelSelectScreen = document.getElementById('level-select-screen');
         
         // --- Web Speech API ---
         const synth = window.speechSynthesis; let availableVoices = [];
@@ -183,16 +208,23 @@
             
             utterThis.volume = 0.8; utterThis.pitch = 1.6; utterThis.rate = 1.0;
             if (text === "Faaaaaa") { utterThis.pitch = 2.0; utterThis.rate = 1.8; }
-            else if (text.includes("Defeated") || text.includes("Eaten") || text.includes("Guilty") || text.includes("Crushed") || text.includes("Burned")) { utterThis.pitch = 0.8; utterThis.rate = 0.9; }
+            else if (text.includes("Defeated") || text.includes("Eaten") || text.includes("Guilty") || text.includes("Crushed") || text.includes("Burned") || text.includes("Hunted")) { utterThis.pitch = 0.8; utterThis.rate = 0.9; }
             synth.speak(utterThis);
         }
 
-        // --- Dynamic CSS Popups ---
         function showPopup(text, color) {
             const popup = document.createElement('div');
             popup.className = 'popup-text'; popup.innerText = text; popup.style.color = color;
             document.body.appendChild(popup);
             gsap.fromTo(popup, {opacity: 1, scale: 0.5, top: "50%"}, {opacity: 0, scale: 1.5, top: "25%", duration: 1.5, ease: "power2.out", onComplete: () => popup.remove() });
+        }
+
+        function showWarning(text, color = '#ff3333') { 
+            warningText.innerText = text; 
+            warningText.style.color = color; 
+            warningText.style.display = 'block'; 
+            gsap.killTweensOf(warningText); 
+            gsap.fromTo(warningText, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, yoyo: true, repeat: 3, onComplete: () => { warningText.style.display = 'none'; }}); 
         }
 
         // --- Retro Audio Synthesizer ---
@@ -210,6 +242,8 @@
             
             if (type === 'jump') { osc.type = 'sine'; osc.frequency.setValueAtTime(300, now); osc.frequency.exponentialRampToValueAtTime(800, now + 0.3); gainNode.gain.setValueAtTime(0.3, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.3); osc.start(now); osc.stop(now + 0.3); }
             else if (type === 'step') { osc.type = 'triangle'; osc.frequency.setValueAtTime(120, now); osc.frequency.exponentialRampToValueAtTime(80, now + 0.05); gainNode.gain.setValueAtTime(0.05, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.05); osc.start(now); osc.stop(now + 0.05); }
+            else if (type === 'pedal') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, now); osc.frequency.linearRampToValueAtTime(200, now + 0.1); gainNode.gain.setValueAtTime(0.02, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.1); osc.start(now); osc.stop(now + 0.1); }
+            else if (type === 'siren') { osc.type = 'square'; osc.frequency.setValueAtTime(800, now); osc.frequency.setValueAtTime(600, now + 0.3); gainNode.gain.setValueAtTime(0.05, now); gainNode.gain.linearRampToValueAtTime(0.05, now + 0.6); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.65); osc.start(now); osc.stop(now + 0.65); }
             else if (type === 'rotate') { osc.type = 'square'; osc.frequency.setValueAtTime(400, now); osc.frequency.exponentialRampToValueAtTime(600, now + 0.15); gainNode.gain.setValueAtTime(0.05, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.15); osc.start(now); osc.stop(now + 0.15); }
             else if (type === 'coin') { osc.type = 'sine'; osc.frequency.setValueAtTime(1000, now); osc.frequency.exponentialRampToValueAtTime(2000, now + 0.1); gainNode.gain.setValueAtTime(0.2, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1); osc.start(now); osc.stop(now + 0.1); }
             else if (type === 'villager') { osc.type = 'square'; osc.frequency.setValueAtTime(150, now); osc.frequency.linearRampToValueAtTime(180, now + 0.1); osc.frequency.linearRampToValueAtTime(130, now + 0.3); gainNode.gain.setValueAtTime(0.3, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.4); osc.start(now); osc.stop(now + 0.4); }
@@ -225,8 +259,8 @@
 
         setInterval(() => { 
             if (!gameHasStarted || isDefeated || isVictory) return;
-            if (currentLevel % 2 !== 0) { if(Math.random() < 0.3) playSound('bird'); } 
-            else playSound('suspicious'); 
+            if (currentLevel === 1) { if(Math.random() < 0.3) playSound('bird'); } 
+            else if (currentLevel === 2) { playSound('suspicious'); }
         }, 1500);
 
         // --- Core Three.js Environment Setup ---
@@ -243,6 +277,28 @@
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6); scene.add(ambientLight);
         const directionalLight = new THREE.DirectionalLight(0xfffff0, 1.5); directionalLight.position.set(8, 15, 6); directionalLight.castShadow = true; directionalLight.shadow.mapSize.width = 2048; directionalLight.shadow.mapSize.height = 2048; scene.add(directionalLight);
 
+        // Level 3 Tunnel Setup
+        const tunnelGroup = new THREE.Group(); scene.add(tunnelGroup);
+        const tunnelGeo = new THREE.CylinderGeometry(15, 15, 600, 32, 1, true);
+        const tunnelMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, side: THREE.BackSide, roughness: 0.8 });
+        const tunnelMesh = new THREE.Mesh(tunnelGeo, tunnelMat);
+        tunnelMesh.rotation.x = Math.PI / 2;
+        tunnelGroup.add(tunnelMesh);
+
+        const tunnelRingsGroup = new THREE.Group(); scene.add(tunnelRingsGroup);
+        for(let i = -300; i < 300; i += 30) {
+            const ringGeo = new THREE.TorusGeometry(14.8, 0.2, 8, 32, Math.PI);
+            const ringMat = new THREE.MeshBasicMaterial({color: 0xffaa00});
+            const ring = new THREE.Mesh(ringGeo, ringMat);
+            ring.position.set(0, 0, i); tunnelRingsGroup.add(ring);
+            
+            const lightL = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.5, 2), new THREE.MeshBasicMaterial({color: 0xffffff})); lightL.position.set(-14.5, 2, i);
+            const lightR = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.5, 2), new THREE.MeshBasicMaterial({color: 0xffffff})); lightR.position.set(14.5, 2, i);
+            tunnelRingsGroup.add(lightL, lightR);
+        }
+        tunnelGroup.visible = false; tunnelRingsGroup.visible = false;
+
+        // Day/Night Groups
         const dayGroup = new THREE.Group(); scene.add(dayGroup);
         const nightGroup = new THREE.Group(); scene.add(nightGroup);
 
@@ -267,6 +323,7 @@
         const moon = new THREE.Mesh(new THREE.SphereGeometry(3, 32, 32), new THREE.MeshBasicMaterial({color: 0xffffee}));
         moon.position.set(-15, 20, -50); nightGroup.add(moon);
 
+        // City Core
         const environmentGroup = new THREE.Group(); scene.add(environmentGroup);
         const roadMat = new THREE.MeshStandardMaterial({ color: 0x555555, roughness: 0.9 });
         const road = new THREE.Mesh(new THREE.PlaneGeometry(8, 600), roadMat); road.rotation.x = -Math.PI / 2; road.receiveShadow = true; environmentGroup.add(road);
@@ -356,8 +413,10 @@
         
         const carWhiteMat = new THREE.MeshStandardMaterial({color: 0xffffff, roughness: 0.4}); const carBlackMat = new THREE.MeshStandardMaterial({color: 0x111111, roughness: 0.4}); const carRedMat = new THREE.MeshStandardMaterial({color: 0xcc0000, roughness: 0.4}); const carPoliceMat = new THREE.MeshStandardMaterial({color: 0x000022, roughness: 0.4});
         const sirenRedMat = new THREE.MeshBasicMaterial({color: 0xff0000}); const sirenBlueMat = new THREE.MeshBasicMaterial({color: 0x0000ff});
+
         const prachiSkinMat = new THREE.MeshStandardMaterial({ color: 0xffdcb0, roughness: 0.5 }); const prachiDressMat = new THREE.MeshStandardMaterial({ color: 0x8b008b, roughness: 0.8 }); 
         const sayanSkinMat = new THREE.MeshStandardMaterial({ color: 0xffdcb0, roughness: 0.5 }); const sayanPantsMat = new THREE.MeshStandardMaterial({ color: 0x0000ff, roughness: 0.8 }); 
+        const sujoySkinMat = new THREE.MeshStandardMaterial({ color: 0xffe0bd, roughness: 0.4 }); const sujoySuitMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.7 });
 
         const activeCollectibles = []; const activeFires = []; const activeProjectiles = []; const activeMonsters = []; const activeTraffic = [];
 
@@ -376,26 +435,18 @@
         function createCar(type) {
             const carGroup = new THREE.Group();
             let mat; let pts = 0; let friendly = false;
-            if(type === 'white') { mat = carWhiteMat; pts = 10; }
-            else if(type === 'black') { mat = carBlackMat; pts = 20; }
-            else if(type === 'red') { mat = carRedMat; pts = 50; }
-            else if(type === 'police') { mat = carPoliceMat; friendly = true; }
-
+            if(type === 'white') { mat = carWhiteMat; pts = 10; } else if(type === 'black') { mat = carBlackMat; pts = 20; } else if(type === 'red') { mat = carRedMat; pts = 50; } else if(type === 'police') { mat = carPoliceMat; friendly = true; }
             carGroup.userData = { type: type, isFriendly: friendly, points: pts };
 
             const body = new THREE.Mesh(new THREE.BoxGeometry(2.5, 1.2, 4.5), mat); body.position.y = 0.8; body.castShadow = true;
-            const top = new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.0, 2.5), new THREE.MeshStandardMaterial({color: 0x999999})); top.position.set(0, 1.8, -0.5); top.castShadow = true;
-            carGroup.add(body, top);
+            const top = new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.0, 2.5), new THREE.MeshStandardMaterial({color: 0x999999})); top.position.set(0, 1.8, -0.5); top.castShadow = true; carGroup.add(body, top);
 
             const wheelGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.4, 16); const tireMat = new THREE.MeshStandardMaterial({color: 0x111111});
-            [[-1.3, 0.4, 1.5], [1.3, 0.4, 1.5], [-1.3, 0.4, -1.5], [1.3, 0.4, -1.5]].forEach(p => {
-                const w = new THREE.Mesh(wheelGeo, tireMat); w.rotation.z = Math.PI/2; w.position.set(...p); carGroup.add(w);
-            });
+            [[-1.3, 0.4, 1.5], [1.3, 0.4, 1.5], [-1.3, 0.4, -1.5], [1.3, 0.4, -1.5]].forEach(p => { const w = new THREE.Mesh(wheelGeo, tireMat); w.rotation.z = Math.PI/2; w.position.set(...p); carGroup.add(w); });
 
             if(type === 'police') {
                 const sR = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.2, 0.4), sirenRedMat); sR.position.set(-0.5, 2.4, -0.5); sR.userData = { isSiren: true, sirenType: 'red' };
-                const sB = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.2, 0.4), sirenBlueMat); sB.position.set(0.5, 2.4, -0.5); sB.userData = { isSiren: true, sirenType: 'blue' };
-                carGroup.add(sR, sB);
+                const sB = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.2, 0.4), sirenBlueMat); sB.position.set(0.5, 2.4, -0.5); sB.userData = { isSiren: true, sirenType: 'blue' }; carGroup.add(sR, sB);
             }
             return carGroup;
         }
@@ -417,6 +468,7 @@
             const eyeGeo = new THREE.BoxGeometry(0.3, 0.3, 0.1); const eyeMat = new THREE.MeshBasicMaterial({color: 0xff0000}); const eyeL = new THREE.Mesh(eyeGeo, eyeMat); eyeL.position.set(-0.4, 0.2, 1.01); const eyeR = new THREE.Mesh(eyeGeo, eyeMat); eyeR.position.set(0.4, 0.2, 1.01); head.add(eyeL, eyeR); prachiGroup.add(head);
             prachiGroup.position.set(0, 0, -80); scene.add(prachiGroup); activeMonsters.push(prachiGroup);
             showWarning("Prachi Approaching! Left Click Fire to kill!", "#ff3333");
+            speakText("Prachi Approaching! Shoot her!");
         }
 
         function spawnSayan() {
@@ -427,6 +479,29 @@
             const specGeo = new THREE.TorusGeometry(0.4, 0.1, 8, 16); const specMat = new THREE.MeshBasicMaterial({color: 0x111111}); const specL = new THREE.Mesh(specGeo, specMat); specL.position.set(-0.5, 0, 1.0); const specR = new THREE.Mesh(specGeo, specMat); specR.position.set(0.5, 0, 1.0); const specBridge = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.1), specMat); specBridge.position.set(0, 0, 1.0); head.add(specL, specR, specBridge); sayanGroup.add(head);
             sayanGroup.position.set(0, 0, -80); scene.add(sayanGroup); activeMonsters.push(sayanGroup);
             showWarning("Sayan Approaching! Press 'C' or CHA button!", "#4CAF50");
+            speakText("Sayan Approaching! Give Cha!");
+        }
+
+        function spawnSujoy() {
+            const sujoyGroup = new THREE.Group(); sujoyGroup.userData = { type: 'sujoy' };
+            const pants = new THREE.Mesh(new THREE.BoxGeometry(6.5, 2, 2), new THREE.MeshStandardMaterial({color: 0x111111})); pants.position.y = 1.0; pants.castShadow = true; sujoyGroup.add(pants);
+            const torso = new THREE.Mesh(new THREE.BoxGeometry(6.5, 3, 2), sujoySuitMat); torso.position.y = 3.5; torso.castShadow = true; sujoyGroup.add(torso);
+            const head = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), sujoySkinMat); head.position.set(0, 6.0, 0); head.castShadow = true;
+            
+            const cigGroup = new THREE.Group();
+            const cigBody = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.6), new THREE.MeshBasicMaterial({color: 0xffffff}));
+            cigBody.rotation.x = Math.PI / 2; cigBody.position.set(0, 0, 0.3);
+            const cigTip = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.1), new THREE.MeshBasicMaterial({color: 0xff3300}));
+            cigTip.rotation.x = Math.PI / 2; cigTip.position.set(0, 0, 0.65);
+            cigGroup.add(cigBody, cigTip); cigGroup.position.set(0.4, -0.3, 1.0); head.add(cigGroup);
+            
+            const specGeo = new THREE.BoxGeometry(1.6, 0.4, 0.1); const specMat = new THREE.MeshBasicMaterial({color: 0x000000});
+            const glasses = new THREE.Mesh(specGeo, specMat); glasses.position.set(0, 0.2, 1.01); head.add(glasses);
+            
+            sujoyGroup.add(head);
+            sujoyGroup.position.set(0, 0, -80); scene.add(sujoyGroup); activeMonsters.push(sujoyGroup);
+            showWarning("Sujoy Hunting! Press 'B' or BOU button!", "#ff3333");
+            speakText("Sujoy Hunting Give Bou");
         }
 
         function spawnTraffic() {
@@ -512,10 +587,7 @@
         const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.2, 0.5, 16), skinMat); neck.position.y = 3.3; character.add(neck);
         const blouse = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.4, 0.5, 32), blouseMat); blouse.position.y = 3.0; character.add(blouse);
         const chestSphereGeo = new THREE.SphereGeometry(0.22, 32, 32); const leftSphere = new THREE.Mesh(chestSphereGeo, dressMat); leftSphere.position.set(-0.18, 2.9, 0.25); character.add(leftSphere); const rightSphere = new THREE.Mesh(chestSphereGeo, dressMat); rightSphere.position.set(0.18, 2.9, 0.25); character.add(rightSphere);
-        
-        // --- THIS WAS THE TYPO THAT CRASHED THE ENGINE: new THREE.Mesh instead of new Mesh ---
         const waist = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.38, 0.6, 32), dressMat); waist.position.y = 2.6; character.add(waist);
-        
         const button1 = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.05, 16), pinkDetailMat); button1.position.set(0, 2.75, 0.38); button1.rotation.x = Math.PI / 2; character.add(button1); const button2 = button1.clone(); button2.position.set(0, 2.55, 0.38); character.add(button2);
         
         const skirtPoints = []; for ( let i = 0; i <= 10; i ++ ) { const t = i / 10; const y = -t * 0.9; const x = 0.38 + (t * t) * 0.5; skirtPoints.push( new THREE.Vector2( x, y ) ); }
@@ -526,23 +598,58 @@
         const createLegAndShoe = (xPos, zRot) => { const legGroup = new THREE.Group(); const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.08, 1.8, 16), skinMat); leg.position.y = 0.9; legGroup.add(leg); const shoe = new THREE.Mesh(new THREE.CapsuleGeometry(0.12, 0.15, 8, 16), pinkDetailMat); shoe.rotation.x = Math.PI / 2; shoe.position.set(0, 0.08, 0.12); const strap = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.04, 0.08), pinkDetailMat); strap.position.set(0, 0.15, 0.02); shoe.add(strap); legGroup.add(shoe); legGroup.position.set(xPos, 0, 0); legGroup.rotation.z = zRot; return legGroup; };
         const characterLeftLeg = createLegAndShoe(-0.25, 0.05); const characterRightLeg = createLegAndShoe(0.25, -0.05); character.add(characterLeftLeg); character.add(characterRightLeg);
 
-        // --- Core Setup & Scoring Mechanics ---
+        // --- Set Level ---
+        function updateEnvironmentMode(lvl) {
+            if (lvl === 1) { 
+                scene.background.setHex(0x71baf2); scene.fog.color.setHex(0x71baf2); scene.fog.density = 0.02;
+                directionalLight.intensity = 1.5; ambientLight.intensity = 0.6;
+                dayGroup.visible = true; nightGroup.visible = false;
+                sceneryGroup.visible = true; tunnelGroup.visible = false; tunnelRingsGroup.visible = false;
+                levelBoard.style.borderColor = "#4CAF50"; levelTitle.style.color = "#4CAF50";
+            } else if (lvl === 2) { 
+                // Strict Night Mode for Level 2
+                scene.background.setHex(0x0a192f); scene.fog.color.setHex(0x0a192f); scene.fog.density = 0.02;
+                directionalLight.intensity = 0.3; ambientLight.intensity = 0.2;
+                dayGroup.visible = false; nightGroup.visible = true;
+                sceneryGroup.visible = true; tunnelGroup.visible = false; tunnelRingsGroup.visible = false;
+                levelBoard.style.borderColor = "#2196F3"; levelTitle.style.color = "#2196F3";
+            } else if (lvl === 3) {
+                // Strict Tunnel Mode for Level 3
+                scene.background.setHex(0x050505); scene.fog.color.setHex(0x050505); scene.fog.density = 0.015;
+                directionalLight.intensity = 0.2; ambientLight.intensity = 0.8;
+                dayGroup.visible = false; nightGroup.visible = false;
+                sceneryGroup.visible = false; tunnelGroup.visible = true; tunnelRingsGroup.visible = true;
+                levelBoard.style.borderColor = "#FFD700"; levelTitle.style.color = "#FFD700";
+            }
+        }
+
+        // --- Level Transition Controller ---
         function checkLevelProgress() {
             if (score >= targetScore && !isVictory && !isDefeated) {
                 if (currentLevel === 1) {
                     playSound('levelClear');
-                    window.setLevel(2);
+                    setLevel(2);
                     gsap.fromTo(levelTitle, { scale: 1.5, color: "#fff" }, { scale: 1, color: "#ff3333", duration: 1, ease: "bounce.out" });
                 } else if (currentLevel === 2) {
                     playSound('levelClear');
-                    window.setLevel(3);
+                    // Pause game and show dialog
+                    keys.w = false; keys.a = false; keys.s = false; keys.d = false;
+                    gameHasStarted = false;
+                    document.getElementById('level3-dialog').style.display = 'flex';
                 } else if (currentLevel === 3) {
                     triggerVictory();
                 }
             }
         }
 
-        window.setLevel = function(lvl) {
+        window.startLevel3 = function() {
+            document.getElementById('level3-dialog').style.display = 'none';
+            setLevel(3);
+            gameHasStarted = true;
+        };
+
+        // Master Set Level Function
+        function setLevel(lvl) {
             currentLevel = lvl; isOnBike = false;
             
             if(bikeGroup) { character.remove(bikeGroup); bikeGroup = null; }
@@ -563,38 +670,19 @@
                 buildRoadLines(2); environmentGroup.rotation.x = 0; road.scale.x = 1; roadMat.color.setHex(0x555555); 
             } 
             else if (lvl === 3) { 
-                targetScore = 1000; levelTitle.innerText = "Lvl 3: Sagnik The Mountain Biker"; levelDesc.innerText = "Traffic! (1000 pts to win)"; 
-                buildRoadLines(3); environmentGroup.rotation.x = 0; road.scale.x = 1.5; roadMat.color.setHex(0x555555); character.rotation.x = 0; 
-                triggerBikeMode();
+                targetScore = 1000; levelTitle.innerText = "Lvl 3: Sagnik The Dark Tunnel Challenge"; levelDesc.innerText = "Traffic! (1000 pts to win)"; 
+                buildRoadLines(3); environmentGroup.rotation.x = 0; road.scale.x = 1.5; roadMat.color.setHex(0x333333); 
+                character.rotation.x = 0; triggerBikeMode(); currentLane = 1;
             }
             updateEnvironmentMode(currentLevel);
-        };
-
-        window.selectDevice = function(type) {
-            initAudio(); 
-            isMobileMode = (type === 'mobile');
-            deviceScreen.style.display = 'none'; startScreen.style.display = 'flex';
-            if (isMobileMode) {
-                document.getElementById('dpad').style.display = 'none'; document.getElementById('joystick-zone').style.display = 'block'; document.getElementById('mobile-actions').style.display = 'flex'; instructionsPanel.style.display = "block"; instructionsPanel.innerHTML = "Use On-Screen Buttons";
-            } else {
-                document.getElementById('dpad').style.display = 'flex'; document.getElementById('joystick-zone').style.display = 'none'; document.getElementById('mobile-actions').style.display = 'none'; instructionsPanel.style.display = "block"; instructionsPanel.innerHTML = "Walk: WASD<br>Jump: SPACE<br>Shoot: L-Click<br>Give Cha: 'C' Key";
-            }
-            const selectedLvl = parseInt(levelSelect.value);
-            if(selectedLvl === 1) score = 0; if(selectedLvl === 2) score = 300; if(selectedLvl === 3) score = 600;
-            scoreBoard.innerText = "Score: " + score;
-            window.setLevel(selectedLvl);
-        };
-
-        window.startGame = function() {
-            initAudio(); playSound('levelStart'); startScreen.style.display = 'none'; gameHasStarted = true;
-        };
+        }
 
         // --- Controls & Inputs ---
         const keys = { w: false, a: false, s: false, d: false };
         let worldZOffset = 0; let isJumping = false; let targetRotationY = 0; let isRotating = false; let lastWalkTick = 0;
         
         function setInput(key, state) { 
-            if(!isDefeated && !isVictory) {
+            if(!isDefeated && !isVictory && gameHasStarted) {
                 if (currentLevel === 3 && state && !keys[key]) {
                     if (key === 'a') currentLane = Math.max(0, currentLane - 1);
                     if (key === 'd') currentLane = Math.min(2, currentLane + 1);
@@ -602,6 +690,44 @@
                 keys[key] = state; 
             }
         }
+
+        // Display sub menu
+        window.showLevelSelect = function() {
+            document.getElementById('device-screen').style.display = 'none';
+            document.getElementById('level-select-screen').style.display = 'flex';
+        };
+
+        window.hideLevelSelect = function() {
+            document.getElementById('level-select-screen').style.display = 'none';
+            document.getElementById('device-screen').style.display = 'flex';
+        };
+
+        window.pickLevel = function(lvl) {
+            selectedLevelToPlay = lvl;
+            window.hideLevelSelect();
+            showPopup("Level " + lvl + " Selected", "#FFD700");
+        };
+
+        // Exposed global functions for buttons
+        window.selectDevice = function(type) {
+            initAudio(); 
+            isMobileMode = (type === 'mobile');
+            document.getElementById('device-screen').style.display = 'none'; 
+            document.getElementById('start-screen').style.display = 'flex';
+            if (isMobileMode) {
+                document.getElementById('dpad').style.display = 'none'; document.getElementById('joystick-zone').style.display = 'block'; document.getElementById('mobile-actions').style.display = 'flex'; instructionsPanel.style.display = "block"; instructionsPanel.innerHTML = "Use On-Screen Buttons";
+            } else {
+                document.getElementById('dpad').style.display = 'flex'; document.getElementById('joystick-zone').style.display = 'none'; document.getElementById('mobile-actions').style.display = 'none'; instructionsPanel.style.display = "block"; instructionsPanel.innerHTML = "Walk: WASD<br>Jump: SPACE<br>Shoot: L-Click<br>Cha: 'C'<br>Bou: 'B'";
+            }
+            
+            if(selectedLevelToPlay === 1) score = 0; if(selectedLevelToPlay === 2) score = 300; if(selectedLevelToPlay === 3) score = 600;
+            scoreBoard.innerText = "Score: " + score;
+            setLevel(selectedLevelToPlay);
+        };
+
+        window.startGame = function() {
+            initAudio(); playSound('levelStart'); startScreen.style.display = 'none'; gameHasStarted = true;
+        };
 
         function triggerShoot() {
             if(!gameHasStarted || isDefeated || isVictory) return; 
@@ -635,6 +761,20 @@
             if (chaGiven) { 
                 playSound('monsterDefeat'); score += 30; scoreBoard.innerText = "Score: " + score; 
                 showPopup("Cha Given! +30", "#FF9800"); 
+                checkLevelProgress();
+            }
+        }
+
+        function triggerBou() {
+            if(!gameHasStarted || isDefeated || isVictory) return;
+            initAudio(); let bouGiven = false;
+            for (let i = activeMonsters.length - 1; i >= 0; i--) {
+                let m = activeMonsters[i];
+                if (m.userData.type === 'sujoy') { gsap.to(m.scale, {x: 0, y: 0, z: 0, duration: 0.3, onComplete: () => scene.remove(m)}); activeMonsters.splice(i, 1); bouGiven = true; }
+            }
+            if (bouGiven) { 
+                playSound('monsterDefeat'); score += 30; scoreBoard.innerText = "Score: " + score; 
+                showPopup("Bou Given! +30", "#9C27B0"); 
                 checkLevelProgress();
             }
         }
@@ -676,7 +816,7 @@
         window.addEventListener('keydown', (e) => { 
             const code = e.key.toLowerCase(); 
             if (code === 'w') setInput('w', true); if (code === 'a') setInput('a', true); if (code === 's') setInput('s', true); if (code === 'd') setInput('d', true); 
-            if (e.code === 'Space') triggerJump(); if (code === 'c') triggerCha();
+            if (e.code === 'Space') triggerJump(); if (code === 'c') triggerCha(); if (code === 'b') triggerBou();
         });
         
         window.addEventListener('keyup', (e) => { const code = e.key.toLowerCase(); if (code === 'w') setInput('w', false); if (code === 'a') setInput('a', false); if (code === 's') setInput('s', false); if (code === 'd') setInput('d', false); });
@@ -712,6 +852,7 @@
         document.getElementById('btn-mobile-jump').addEventListener('touchstart', (e) => { e.preventDefault(); triggerJump(); }, {passive: false}); document.getElementById('btn-mobile-jump').addEventListener('mousedown', () => triggerJump());
         document.getElementById('btn-mobile-shoot').addEventListener('touchstart', (e) => { e.preventDefault(); triggerShoot(); }, {passive: false}); document.getElementById('btn-mobile-shoot').addEventListener('mousedown', () => triggerShoot());
         document.getElementById('btn-mobile-cha').addEventListener('touchstart', (e) => { e.preventDefault(); triggerCha(); }, {passive: false}); document.getElementById('btn-mobile-cha').addEventListener('mousedown', () => triggerCha());
+        document.getElementById('btn-mobile-bou').addEventListener('touchstart', (e) => { e.preventDefault(); triggerBou(); }, {passive: false}); document.getElementById('btn-mobile-bou').addEventListener('mousedown', () => triggerBou());
         window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });
 
         // --- Render Loop ---
@@ -719,7 +860,7 @@
         function animate() { 
             requestAnimationFrame(animate); 
             const time = clock.getElapsedTime(); 
-            const isMoving = (keys.w || keys.a || keys.s || keys.d) && !isDefeated && !isVictory; 
+            const isMoving = (keys.w || keys.a || keys.s || keys.d) && !isDefeated && !isVictory && gameHasStarted; 
             const speed = isOnBike ? 0.45 : 0.25; 
             
             if (dayGroup.visible) {
@@ -741,6 +882,15 @@
                 s.position.z += speed * (keys.w ? 1 : 0) - speed * (keys.s ? 1 : 0);
                 if(s.position.z > 40) s.position.z -= 380;
                 else if(s.position.z < -340) s.position.z += 380;
+            }
+            
+            if (tunnelRingsGroup.visible && isMoving) {
+                for(let i=0; i<tunnelRingsGroup.children.length; i++){
+                    let ring = tunnelRingsGroup.children[i];
+                    ring.position.z += speed * (keys.w ? 1 : 0) - speed * (keys.s ? 1 : 0);
+                    if(ring.position.z > 40) ring.position.z -= 600;
+                    else if(ring.position.z < -560) ring.position.z += 600;
+                }
             }
 
             for (let fire of activeFires) { fire.scale.y = 1 + Math.sin(time * 15) * 0.15; fire.scale.x = 1 + Math.cos(time * 10) * 0.05; fire.scale.z = 1 + Math.cos(time * 10) * 0.05; }
@@ -786,8 +936,10 @@
 
             // Animate Sirens on Level 3
             let flash = Math.floor(time * 8) % 2 === 0;
+            let hasPolice = false;
             for(let t of activeTraffic) {
                 if(t.userData.type === 'police') {
+                    hasPolice = true;
                     t.children.forEach(c => {
                         if(c.userData.isSiren) {
                             if(c.userData.sirenType === 'red') c.material.color.setHex(flash ? 0xff0000 : 0x550000);
@@ -795,6 +947,10 @@
                         }
                     });
                 }
+            }
+            if (hasPolice && time - lastSirenTime > 0.6) {
+                playSound('siren');
+                lastSirenTime = time;
             }
 
             if (isMoving) { 
@@ -805,13 +961,15 @@
                     distanceTravelled += speed; 
                     if (distanceTravelled > nextSpawnDistance) { 
                         if (currentLevel < 3) spawnEntity(); 
-                        else spawnTraffic();
+                        else {
+                            if (Math.random() < 0.15) spawnSujoy();
+                            else spawnTraffic();
+                        }
                         distanceTravelled = 0; nextSpawnDistance = 60 + Math.random() * 40; 
                     } 
                 } 
                 
                 let roadBounds = currentLevel === 3 ? 5.5 : 3.5;
-                
                 if (currentLevel === 3) {
                     character.position.x += (LANES[currentLane] - character.position.x) * 0.15;
                 } else {
@@ -837,9 +995,11 @@
                     
                     if(m.userData.type === 'prachi') m.position.y = Math.abs(Math.sin(time * 6 + m.userData.jumpOffset)) * 4;
 
-                    if (!isJumping && !isDefeated && !isOnBike) {
-                        // Collision check based only on Z axis depth to make dodging impossible
-                        if (Math.abs(character.position.z - m.position.z) < 2.0) triggerDefeat(m.userData.type === 'prachi' ? "Prachi Eaten Sagnik" : "Sayan Eaten Sagnik");
+                    if (!isDefeated && gameHasStarted) {
+                        if (Math.abs(character.position.z - m.position.z) < 2.0) {
+                            if (m.userData.type === 'sujoy') triggerDefeat("Sujoy Hunted Sagnik!");
+                            else if (!isOnBike && !isJumping) triggerDefeat(m.userData.type === 'prachi' ? "Prachi Eaten Sagnik" : "Sayan Eaten Sagnik");
+                        }
                     }
                     if (m.position.z > 10) { scene.remove(m); activeMonsters.splice(i, 1); }
                 }
@@ -870,7 +1030,10 @@
                 } 
                 
                 const walkCycle = time * (isOnBike ? 20 : 14); 
-                if (Math.sin(walkCycle) * Math.sin(lastWalkTick) < 0 && !isJumping && !isOnBike) playSound('step'); 
+                if (Math.sin(walkCycle) * Math.sin(lastWalkTick) < 0 && !isJumping) {
+                    if (isOnBike && isMoving) playSound('pedal');
+                    else if (!isOnBike) playSound('step');
+                }
                 lastWalkTick = walkCycle; 
                 
                 if (!isJumping) {
@@ -891,7 +1054,7 @@
                 
                 for(let t of activeTraffic) {
                     t.position.z += 0.3; // Traffic continues moving even if player stops
-                    if (!isDefeated) {
+                    if (!isDefeated && gameHasStarted) {
                         if (Math.hypot(character.position.x - t.position.x, character.position.z - t.position.z) < 2.0) {
                             triggerDefeat("Crushed by Traffic!");
                         }
@@ -903,8 +1066,11 @@
                     m.position.z += 0.15; 
                     if(m.userData.type === 'prachi') m.position.y = Math.abs(Math.sin(time * 6 + m.userData.jumpOffset)) * 4;
 
-                    if (!isJumping && !isDefeated && !isVictory && gameHasStarted && !isOnBike) {
-                        if (Math.abs(character.position.z - m.position.z) < 2.0) triggerDefeat(m.userData.type === 'prachi' ? "Prachi Eaten Sagnik" : "Sayan Eaten Sagnik");
+                    if (!isDefeated && gameHasStarted) {
+                        if (Math.abs(character.position.z - m.position.z) < 2.0) {
+                            if (m.userData.type === 'sujoy') triggerDefeat("Sujoy Hunted Sagnik!");
+                            else if (!isOnBike && !isJumping) triggerDefeat(m.userData.type === 'prachi' ? "Prachi Eaten Sagnik" : "Sayan Eaten Sagnik");
+                        }
                     }
                 }
 
