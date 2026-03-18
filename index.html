@@ -28,12 +28,9 @@
         /* Dynamic CSS Popups */
         .popup-text { position: absolute; left: 50%; transform: translateX(-50%); font-size: 3.5rem; font-weight: 900; pointer-events: none; z-index: 300; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 4px 10px rgba(0,0,0,0.5); white-space: nowrap; }
 
-        /* PC Controls */
-        #dpad { position: absolute; bottom: 40px; left: 40px; display: none; flex-direction: column; align-items: center; pointer-events: auto; user-select: none; }
-        .dpad-row { display: flex; justify-content: center; gap: 10px; }
-        .dpad-btn { background-color: #FFB6C1; color: #333; border: none; width: 65px; height: 65px; margin: 5px; font-size: 1.8rem; font-weight: 900; border-radius: 15px; cursor: pointer; box-shadow: 0 6px 0 #FF69B4, 0 10px 15px rgba(0,0,0,0.25); outline: none; display: flex; align-items: center; justify-content: center; }
-        .dpad-btn:active, .dpad-btn.active { transform: translateY(6px); box-shadow: 0 0px 0 #FF69B4; background-color: #ff9eb0; }
-        
+        /* PC Instructions */
+        .instructions { position: absolute; top: 120px; right: 30px; background: rgba(0,0,0,0.6); color: white; padding: 15px 25px; border-radius: 15px; font-size: 1.2rem; font-weight: bold; text-align: right; backdrop-filter: blur(5px); display: none; }
+
         /* Mobile Controls */
         #joystick-zone { display: none; position: absolute; bottom: 40px; left: 40px; width: 160px; height: 160px; border-radius: 50%; background: rgba(0,0,0,0.3); border: 3px solid rgba(255,255,255,0.5); pointer-events: auto; touch-action: none; }
         #joystick-stick { position: absolute; top: 50px; left: 50px; width: 60px; height: 60px; background: #FFB6C1; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
@@ -44,8 +41,6 @@
         #btn-mobile-shoot { background-color: #f44336; box-shadow: 0 6px 0 #b71c1c; }
         #btn-mobile-cha { background-color: #FF9800; box-shadow: 0 6px 0 #E65100; }
         #btn-mobile-jump { background-color: #4CAF50; box-shadow: 0 6px 0 #1B5E20; }
-
-        .instructions { position: absolute; top: 120px; right: 30px; background: rgba(0,0,0,0.6); color: white; padding: 15px 25px; border-radius: 15px; font-size: 1.2rem; font-weight: bold; text-align: right; backdrop-filter: blur(5px); }
 
         /* Overlay Screens */
         .overlay-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 100; pointer-events: auto; text-align: center; padding: 20px; box-sizing: border-box; }
@@ -67,6 +62,12 @@
         
         .level-selector-box { width: 100%; max-width: 350px; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 15px; border: 2px dashed #FFD700; box-sizing: border-box; margin: 10px 0; }
         .level-selector-box select { font-size: 1.1rem; padding: 10px; border-radius: 10px; width: 100%; font-weight: bold; background: #fff; color: #333; border: none; outline: none; cursor: pointer; touch-action: auto; pointer-events: auto; }
+        
+        /* PC D-Pad */
+        #dpad { position: absolute; bottom: 40px; left: 40px; display: none; flex-direction: column; align-items: center; pointer-events: auto; user-select: none; }
+        .dpad-row { display: flex; justify-content: center; gap: 10px; }
+        .dpad-btn { background-color: #FFB6C1; color: #333; border: none; width: 65px; height: 65px; margin: 5px; font-size: 1.8rem; font-weight: 900; border-radius: 15px; cursor: pointer; box-shadow: 0 6px 0 #FF69B4, 0 10px 15px rgba(0,0,0,0.25); outline: none; display: flex; align-items: center; justify-content: center; }
+        .dpad-btn:active, .dpad-btn.active { transform: translateY(6px); box-shadow: 0 0px 0 #FF69B4; background-color: #ff9eb0; }
     </style>
 </head>
 <body>
@@ -100,23 +101,23 @@
     <div id="device-screen" class="overlay-screen">
         <div class="title-text" style="color: #ffffff;">GAME SETUP</div>
         <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-            <button class="action-btn btn-blue" onclick="selectDevice('pc')">PLAY ON PC</button>
+            <button class="action-btn btn-blue" onclick="window.selectDevice('pc')">PLAY ON PC</button>
             <div class="level-selector-box">
-                <label style="color: #FFD700; font-size: 1.2rem; font-weight: bold; display:block; margin-bottom: 10px;">CHOOSE LEVEL <br><span style="color:#ff5555; font-size:0.9rem;">(Optional / Not Recommended)</span></label>
+                <label style="color: #FFD700; font-size: 1.2rem; font-weight: bold; display:block; margin-bottom: 10px;">CHOOSE LEVEL <br><span style="color:#ff5555; font-size:0.9rem;">(Optional)</span></label>
                 <select id="level-select">
                     <option value="1">Lvl 1 - Sagnik Got Sakti</option>
                     <option value="2">Lvl 2 - Sagnik's Pune Controversy</option>
                     <option value="3">Lvl 3 - Sagnik The Mountain Biker</option>
                 </select>
             </div>
-            <button class="action-btn btn-yellow" onclick="selectDevice('mobile')">PLAY ON MOBILE</button>
+            <button class="action-btn btn-yellow" onclick="window.selectDevice('mobile')">PLAY ON MOBILE</button>
         </div>
     </div>
 
     <div id="start-screen" class="overlay-screen">
         <div class="title-text" style="color: #FFD700;">WELCOME TO PUNE</div>
         <div class="story-text">Sagnik has lost in a City called PUNE where many monsters came to attack Sagnik. Rescue Sagnik and master the mechanics to play!</div>
-        <button class="action-btn btn-green" onclick="startGame()">START RESCUE</button>
+        <button class="action-btn btn-green" onclick="window.startGame()">START RESCUE</button>
     </div>
 
     <div id="defeat-screen" class="overlay-screen">
@@ -130,22 +131,24 @@
     </div>
 
     <script>
-        // Prevent context menu to allow clean firing on PC
-        window.addEventListener('contextmenu', (e) => e.preventDefault());
+        // Prevent context menu
+        window.addEventListener('contextmenu', (e) => {
+            if(e.target.tagName !== 'SELECT') e.preventDefault(); 
+        });
 
         // --- Fullscreen API Logic ---
         const fsBtn = document.getElementById('fullscreen-btn');
         fsBtn.addEventListener('click', () => {
             if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-                if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen(); } 
-                else if (document.documentElement.msRequestFullscreen) { document.documentElement.msRequestFullscreen(); } 
-                else if (document.documentElement.mozRequestFullScreen) { document.documentElement.mozRequestFullScreen(); } 
-                else if (document.documentElement.webkitRequestFullscreen) { document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT); }
+                if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+                else if (document.documentElement.msRequestFullscreen) document.documentElement.msRequestFullscreen();
+                else if (document.documentElement.mozRequestFullScreen) document.documentElement.mozRequestFullScreen();
+                else if (document.documentElement.webkitRequestFullscreen) document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
             } else {
-                if (document.exitFullscreen) { document.exitFullscreen(); } 
-                else if (document.msExitFullscreen) { document.msExitFullscreen(); } 
-                else if (document.mozCancelFullScreen) { document.mozCancelFullScreen(); } 
-                else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.msExitFullscreen) document.msExitFullscreen();
+                else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
             }
         });
         function updateFsIcon() {
@@ -160,6 +163,8 @@
         let gameHasStarted = false; let isMobileMode = false; let distanceTravelled = 0; let nextSpawnDistance = 30;
         let isDefeated = false; let isVictory = false; let isOnBike = false;
 
+        const LANES = [-3.5, 0, 3.5]; let currentLane = 1; 
+
         const scoreBoard = document.getElementById('score-board'); const levelTitle = document.getElementById('level-title'); const levelDesc = document.getElementById('level-desc');
         const levelBoard = document.getElementById('level-board'); const defeatScreen = document.getElementById('defeat-screen'); const defeatTitle = document.getElementById('defeat-title');
         const victoryScreen = document.getElementById('victory-screen'); const deviceScreen = document.getElementById('device-screen'); const startScreen = document.getElementById('start-screen');
@@ -169,8 +174,8 @@
         const synth = window.speechSynthesis; let availableVoices = [];
         synth.onvoiceschanged = () => { availableVoices = synth.getVoices(); };
 
-        function speakText(text, isBackground = false) {
-            if (!synth) return; if (!isBackground) synth.cancel(); 
+        function speakText(text) {
+            if (!synth) return; synth.cancel(); 
             const utterThis = new SpeechSynthesisUtterance(text);
             if (availableVoices.length === 0) availableVoices = synth.getVoices();
             const femaleVoice = availableVoices.find(v => v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('samantha') || v.name.toLowerCase().includes('zira'));
@@ -178,7 +183,7 @@
             
             utterThis.volume = 0.8; utterThis.pitch = 1.6; utterThis.rate = 1.0;
             if (text === "Faaaaaa") { utterThis.pitch = 2.0; utterThis.rate = 1.8; }
-            else if (text.includes("Defeated") || text.includes("Eaten") || text.includes("Burned")) { utterThis.pitch = 0.8; utterThis.rate = 0.9; }
+            else if (text.includes("Defeated") || text.includes("Eaten") || text.includes("Guilty") || text.includes("Crushed") || text.includes("Burned")) { utterThis.pitch = 0.8; utterThis.rate = 0.9; }
             synth.speak(utterThis);
         }
 
@@ -210,7 +215,7 @@
             else if (type === 'villager') { osc.type = 'square'; osc.frequency.setValueAtTime(150, now); osc.frequency.linearRampToValueAtTime(180, now + 0.1); osc.frequency.linearRampToValueAtTime(130, now + 0.3); gainNode.gain.setValueAtTime(0.3, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.4); osc.start(now); osc.stop(now + 0.4); }
             else if (type === 'levelStart') { osc.type = 'square'; osc.frequency.setValueAtTime(261.63, now); osc.frequency.setValueAtTime(329.63, now + 0.15); osc.frequency.setValueAtTime(392.00, now + 0.3); osc.frequency.setValueAtTime(523.25, now + 0.45); gainNode.gain.setValueAtTime(0.2, now); gainNode.gain.linearRampToValueAtTime(0.2, now + 0.6); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 1.0); osc.start(now); osc.stop(now + 1.0); }
             else if (type === 'levelClear') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(440, now); osc.frequency.setValueAtTime(554.37, now + 0.2); osc.frequency.setValueAtTime(659.25, now + 0.4); osc.frequency.setValueAtTime(880, now + 0.6); gainNode.gain.setValueAtTime(0.25, now); gainNode.gain.linearRampToValueAtTime(0.25, now + 0.8); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 1.5); osc.start(now); osc.stop(now + 1.5); }
-            else if (type === 'shoot') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(400, now); osc.frequency.exponentialRampToValueAtTime(50, now + 0.3); gainNode.gain.setValueAtTime(0.2, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.3); osc.start(now); osc.stop(now + 0.3); }
+            else if (type === 'shoot') { osc.type = 'square'; osc.frequency.setValueAtTime(800, now); osc.frequency.exponentialRampToValueAtTime(200, now + 0.15); gainNode.gain.setValueAtTime(0.15, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.15); osc.start(now); osc.stop(now + 0.15); }
             else if (type === 'defeat') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(200, now); osc.frequency.exponentialRampToValueAtTime(40, now + 1.0); gainNode.gain.setValueAtTime(0.3, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 1.0); osc.start(now); osc.stop(now + 1.0); }
             else if (type === 'destroy') { osc.type = 'square'; osc.frequency.setValueAtTime(100, now); osc.frequency.exponentialRampToValueAtTime(50, now + 0.2); gainNode.gain.setValueAtTime(0.3, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2); osc.start(now); osc.stop(now + 0.2); }
             else if (type === 'monsterDefeat') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, now); osc.frequency.exponentialRampToValueAtTime(10, now + 0.6); gainNode.gain.setValueAtTime(0.5, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.6); osc.start(now); osc.stop(now + 0.6); }
@@ -218,18 +223,11 @@
             else if (type === 'bird') { osc.type = 'sine'; osc.frequency.setValueAtTime(2000, now); osc.frequency.exponentialRampToValueAtTime(4000, now + 0.1); osc.frequency.exponentialRampToValueAtTime(1000, now + 0.2); gainNode.gain.setValueAtTime(0.05, now); gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2); osc.start(now); osc.stop(now + 0.2); }
         }
 
-        // Ambient Event Loops
         setInterval(() => { 
             if (!gameHasStarted || isDefeated || isVictory) return;
-            if (currentLevel % 2 !== 0) { if(Math.random() < 0.3) playSound('bird'); } // Day sounds
-            else playSound('suspicious'); // Night sounds
+            if (currentLevel % 2 !== 0) { if(Math.random() < 0.3) playSound('bird'); } 
+            else playSound('suspicious'); 
         }, 1500);
-
-        setInterval(() => {
-            if (gameHasStarted && !isDefeated && !isVictory && !synth.speaking && currentLevel % 2 === 0) {
-                speakText("Jinkachika Jinkachika jinkachika jikhan ka", true);
-            }
-        }, 3000);
 
         // --- Core Three.js Environment Setup ---
         const scene = new THREE.Scene();
@@ -245,7 +243,6 @@
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6); scene.add(ambientLight);
         const directionalLight = new THREE.DirectionalLight(0xfffff0, 1.5); directionalLight.position.set(8, 15, 6); directionalLight.castShadow = true; directionalLight.shadow.mapSize.width = 2048; directionalLight.shadow.mapSize.height = 2048; scene.add(directionalLight);
 
-        // Day/Night Groups
         const dayGroup = new THREE.Group(); scene.add(dayGroup);
         const nightGroup = new THREE.Group(); scene.add(nightGroup);
 
@@ -270,10 +267,7 @@
         const moon = new THREE.Mesh(new THREE.SphereGeometry(3, 32, 32), new THREE.MeshBasicMaterial({color: 0xffffee}));
         moon.position.set(-15, 20, -50); nightGroup.add(moon);
 
-        // City Core
         const environmentGroup = new THREE.Group(); scene.add(environmentGroup);
-        
-        // Road length increased to 600 to prevent glitching at the horizon when tilted
         const roadMat = new THREE.MeshStandardMaterial({ color: 0x555555, roughness: 0.9 });
         const road = new THREE.Mesh(new THREE.PlaneGeometry(8, 600), roadMat); road.rotation.x = -Math.PI / 2; road.receiveShadow = true; environmentGroup.add(road);
         
@@ -295,7 +289,7 @@
             }
         }
 
-        // --- Custom Building Textures (Shops & Institutions) ---
+        // --- Custom Building Textures ---
         function createSignTexture(text, bgColor, textColor) { 
             const canvas = document.createElement('canvas'); canvas.width = 512; canvas.height = 128; 
             const ctx = canvas.getContext('2d'); 
@@ -319,7 +313,6 @@
         };
         const signTypesArray = Object.keys(signMaterials);
 
-        // Scenery Elements
         const trunkMat = new THREE.MeshStandardMaterial({color: 0x5c4033, roughness: 0.9}); const leafMat = new THREE.MeshStandardMaterial({color: 0x228b22, roughness: 0.8});
         function createTree(x, z) { const tree = new THREE.Group(); const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.4, 2), trunkMat); trunk.position.y = 1; trunk.castShadow = true; const leaves = new THREE.Mesh(new THREE.ConeGeometry(1.5, 4, 8), leafMat); leaves.position.y = 3.5; leaves.castShadow = true; tree.add(trunk, leaves); tree.position.set(x, 0, z); return tree; }
 
@@ -358,18 +351,16 @@
         // --- Materials For Mechanics ---
         function createCODTexture() { const canvas = document.createElement('canvas'); canvas.width = 256; canvas.height = 256; const ctx = canvas.getContext('2d'); ctx.fillStyle = '#FFD700'; ctx.beginPath(); ctx.arc(128, 128, 128, 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = '#DAA520'; ctx.lineWidth = 10; ctx.stroke(); ctx.fillStyle = '#8B6508'; ctx.font = 'bold 85px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('COD', 128, 135); return new THREE.CanvasTexture(canvas); }
         const coinFaceMat = new THREE.MeshBasicMaterial({ map: createCODTexture() }); const coinRimMat = new THREE.MeshStandardMaterial({ color: 0xFFD700, metalness: 0.8 });
-        
         const fireBaseMat = new THREE.MeshBasicMaterial({ color: 0xff4500 }); const fireInnerMat = new THREE.MeshBasicMaterial({ color: 0xffd700 }); 
         const projectileMat = new THREE.MeshBasicMaterial({ color: 0x00ffff }); 
         
-        const prachiSkinMat = new THREE.MeshStandardMaterial({ color: 0xffdcb0, roughness: 0.5 }); 
-        const prachiDressMat = new THREE.MeshStandardMaterial({ color: 0x8b008b, roughness: 0.8 }); 
-        const sayanSkinMat = new THREE.MeshStandardMaterial({ color: 0xffdcb0, roughness: 0.5 }); 
-        const sayanPantsMat = new THREE.MeshStandardMaterial({ color: 0x0000ff, roughness: 0.8 }); 
+        const carWhiteMat = new THREE.MeshStandardMaterial({color: 0xffffff, roughness: 0.4}); const carBlackMat = new THREE.MeshStandardMaterial({color: 0x111111, roughness: 0.4}); const carRedMat = new THREE.MeshStandardMaterial({color: 0xcc0000, roughness: 0.4}); const carPoliceMat = new THREE.MeshStandardMaterial({color: 0x000022, roughness: 0.4});
+        const sirenRedMat = new THREE.MeshBasicMaterial({color: 0xff0000}); const sirenBlueMat = new THREE.MeshBasicMaterial({color: 0x0000ff});
+        const prachiSkinMat = new THREE.MeshStandardMaterial({ color: 0xffdcb0, roughness: 0.5 }); const prachiDressMat = new THREE.MeshStandardMaterial({ color: 0x8b008b, roughness: 0.8 }); 
+        const sayanSkinMat = new THREE.MeshStandardMaterial({ color: 0xffdcb0, roughness: 0.5 }); const sayanPantsMat = new THREE.MeshStandardMaterial({ color: 0x0000ff, roughness: 0.8 }); 
 
-        const activeCollectibles = []; const activeFires = []; const activeProjectiles = []; const activeMonsters = [];
+        const activeCollectibles = []; const activeFires = []; const activeProjectiles = []; const activeMonsters = []; const activeTraffic = [];
 
-        // Minecraft Villager Generation
         function createVillager() {
             const vGroup = new THREE.Group();
             const skin = new THREE.MeshStandardMaterial({color: 0xd0a37e, roughness:0.9});
@@ -382,7 +373,40 @@
             vGroup.add(head, nose, eyeL, eyeR, pupilL, pupilR, brow); vGroup.scale.set(1.2, 1.2, 1.2); return vGroup;
         }
 
-        function showWarning(text, color = '#ff3333') { warningText.innerText = text; warningText.style.color = color; warningText.style.display = 'block'; gsap.fromTo(warningText, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, yoyo: true, repeat: 3, onComplete: () => { warningText.style.display = 'none'; }}); }
+        function createCar(type) {
+            const carGroup = new THREE.Group();
+            let mat; let pts = 0; let friendly = false;
+            if(type === 'white') { mat = carWhiteMat; pts = 10; }
+            else if(type === 'black') { mat = carBlackMat; pts = 20; }
+            else if(type === 'red') { mat = carRedMat; pts = 50; }
+            else if(type === 'police') { mat = carPoliceMat; friendly = true; }
+
+            carGroup.userData = { type: type, isFriendly: friendly, points: pts };
+
+            const body = new THREE.Mesh(new THREE.BoxGeometry(2.5, 1.2, 4.5), mat); body.position.y = 0.8; body.castShadow = true;
+            const top = new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.0, 2.5), new THREE.MeshStandardMaterial({color: 0x999999})); top.position.set(0, 1.8, -0.5); top.castShadow = true;
+            carGroup.add(body, top);
+
+            const wheelGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.4, 16); const tireMat = new THREE.MeshStandardMaterial({color: 0x111111});
+            [[-1.3, 0.4, 1.5], [1.3, 0.4, 1.5], [-1.3, 0.4, -1.5], [1.3, 0.4, -1.5]].forEach(p => {
+                const w = new THREE.Mesh(wheelGeo, tireMat); w.rotation.z = Math.PI/2; w.position.set(...p); carGroup.add(w);
+            });
+
+            if(type === 'police') {
+                const sR = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.2, 0.4), sirenRedMat); sR.position.set(-0.5, 2.4, -0.5); sR.userData = { isSiren: true, sirenType: 'red' };
+                const sB = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.2, 0.4), sirenBlueMat); sB.position.set(0.5, 2.4, -0.5); sB.userData = { isSiren: true, sirenType: 'blue' };
+                carGroup.add(sR, sB);
+            }
+            return carGroup;
+        }
+
+        function createNPCCyclist() {
+            const group = new THREE.Group(); group.userData = { type: 'npc', isFriendly: true, points: 0 };
+            const bike = createBicycle();
+            const torso = new THREE.Mesh(new THREE.BoxGeometry(0.8, 1.5, 0.5), new THREE.MeshStandardMaterial({color: Math.random() * 0xffffff})); torso.position.set(0, 2.5, -0.5); torso.rotation.x = 0.3;
+            const head = new THREE.Mesh(new THREE.SphereGeometry(0.4, 16, 16), new THREE.MeshStandardMaterial({color: 0xd0a37e})); head.position.set(0, 3.5, -0.2);
+            group.add(bike, torso, head); return group;
+        }
 
         function spawnPrachi() {
             const prachiGroup = new THREE.Group(); prachiGroup.userData = { type: 'prachi', jumpOffset: Math.random() * Math.PI };
@@ -405,16 +429,35 @@
             showWarning("Sayan Approaching! Press 'C' or CHA button!", "#4CAF50");
         }
 
+        function spawnTraffic() {
+            const lanes = [-3.5, 0, 3.5]; const numVehicles = Math.random() < 0.6 ? 2 : 1; 
+            for (let i = lanes.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [lanes[i], lanes[j]] = [lanes[j], lanes[i]]; }
+
+            for(let i=0; i<numVehicles; i++) {
+                let vGroup; let r = Math.random();
+                if(r < 0.2) vGroup = createCar('police');
+                else if(r < 0.4) vGroup = createNPCCyclist();
+                else if(r < 0.7) vGroup = createCar('white');
+                else if(r < 0.95) vGroup = createCar('black');
+                else vGroup = createCar('red');
+
+                vGroup.position.set(lanes[i], 0, -100); scene.add(vGroup); activeTraffic.push(vGroup);
+            }
+        }
+
         function spawnEntity() { 
             if(isOnBike) return; 
-            const roadW = currentLevel === 3 ? 12 : 6;
-            const randomX = (Math.random() * roadW) - (roadW/2); const rand = Math.random();
+            const roadW = 6; const randomX = (Math.random() * roadW) - (roadW/2); const rand = Math.random();
 
-            if (currentLevel >= 2 && rand < 0.35) {
+            if (currentLevel === 2 && rand < 0.35) {
                 if (Math.random() < 0.5) spawnPrachi(); else spawnSayan();
             } else if (rand < 0.6) {
-                const fireGroup = new THREE.Group(); const limit = currentLevel === 3 ? 6 : 4;
-                for (let fx = -limit; fx <= limit; fx += 1.5) { const base = new THREE.Mesh(new THREE.ConeGeometry(1.2, 2.5, 16), fireBaseMat); base.position.set(fx, 1.25, 0); const inner = new THREE.Mesh(new THREE.ConeGeometry(0.8, 1.8, 16), fireInnerMat); inner.position.set(fx, 0.9, 0); fireGroup.add(base, inner); }
+                const fireGroup = new THREE.Group(); const limit = 4;
+                for (let fx = -limit; fx <= limit; fx += 1.5) {
+                    const base = new THREE.Mesh(new THREE.ConeGeometry(1.2, 2.5, 16), fireBaseMat); base.position.set(fx, 1.25, 0);
+                    const inner = new THREE.Mesh(new THREE.ConeGeometry(0.8, 1.8, 16), fireInnerMat); inner.position.set(fx, 0.9, 0);
+                    fireGroup.add(base, inner);
+                }
                 fireGroup.position.set(0, 0, -60); scene.add(fireGroup); activeFires.push(fireGroup);
             } else {
                 let itemGroup; const isVillager = Math.random() > 0.5; 
@@ -429,13 +472,16 @@
         function createBicycle() {
             bikeGroup = new THREE.Group();
             const frameMat = new THREE.MeshStandardMaterial({color: 0xe53935, metalness: 0.6}); const tireMat = new THREE.MeshStandardMaterial({color: 0x111111, roughness: 0.9});
-            bikeWheelF = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.1, 16, 32), tireMat); bikeWheelF.position.set(0, 0.8, 2.0); bikeWheelB = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.1, 16, 32), tireMat); bikeWheelB.position.set(0, 0.8, -1.5);
+            bikeWheelF = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.1, 16, 32), tireMat); bikeWheelF.position.set(0, 0.8, 2.0);
+            bikeWheelB = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.1, 16, 32), tireMat); bikeWheelB.position.set(0, 0.8, -1.5);
             const frame = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 3.5), frameMat); frame.rotation.x = Math.PI/2; frame.position.set(0, 1.6, 0.25);
             const handlePost = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1.8), frameMat); handlePost.position.set(0, 1.8, 2.0); handlePost.rotation.x = -0.2;
             const handleBar = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1.5), frameMat); handleBar.rotation.z = Math.PI/2; handleBar.position.set(0, 2.6, 1.8);
             const seatPost = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1.5), frameMat); seatPost.position.set(0, 1.6, -0.5); seatPost.rotation.x = 0.2;
             const seat = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.2, 0.8), new THREE.MeshStandardMaterial({color:0x111111})); seat.position.set(0, 2.3, -0.6);
-            bikeGroup.add(bikeWheelF, bikeWheelB, frame, handlePost, handleBar, seatPost, seat); bikeGroup.position.set(0, -0.8, 0); return bikeGroup;
+            bikeGroup.add(bikeWheelF, bikeWheelB, frame, handlePost, handleBar, seatPost, seat);
+            bikeGroup.position.set(0, -0.8, 0); 
+            return bikeGroup;
         }
 
         // --- Character Rig ---
@@ -466,7 +512,10 @@
         const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.2, 0.5, 16), skinMat); neck.position.y = 3.3; character.add(neck);
         const blouse = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.4, 0.5, 32), blouseMat); blouse.position.y = 3.0; character.add(blouse);
         const chestSphereGeo = new THREE.SphereGeometry(0.22, 32, 32); const leftSphere = new THREE.Mesh(chestSphereGeo, dressMat); leftSphere.position.set(-0.18, 2.9, 0.25); character.add(leftSphere); const rightSphere = new THREE.Mesh(chestSphereGeo, dressMat); rightSphere.position.set(0.18, 2.9, 0.25); character.add(rightSphere);
+        
+        // --- THIS WAS THE TYPO THAT CRASHED THE ENGINE: new THREE.Mesh instead of new Mesh ---
         const waist = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.38, 0.6, 32), dressMat); waist.position.y = 2.6; character.add(waist);
+        
         const button1 = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.05, 16), pinkDetailMat); button1.position.set(0, 2.75, 0.38); button1.rotation.x = Math.PI / 2; character.add(button1); const button2 = button1.clone(); button2.position.set(0, 2.55, 0.38); character.add(button2);
         
         const skirtPoints = []; for ( let i = 0; i <= 10; i ++ ) { const t = i / 10; const y = -t * 0.9; const x = 0.38 + (t * t) * 0.5; skirtPoints.push( new THREE.Vector2( x, y ) ); }
@@ -477,53 +526,82 @@
         const createLegAndShoe = (xPos, zRot) => { const legGroup = new THREE.Group(); const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.08, 1.8, 16), skinMat); leg.position.y = 0.9; legGroup.add(leg); const shoe = new THREE.Mesh(new THREE.CapsuleGeometry(0.12, 0.15, 8, 16), pinkDetailMat); shoe.rotation.x = Math.PI / 2; shoe.position.set(0, 0.08, 0.12); const strap = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.04, 0.08), pinkDetailMat); strap.position.set(0, 0.15, 0.02); shoe.add(strap); legGroup.add(shoe); legGroup.position.set(xPos, 0, 0); legGroup.rotation.z = zRot; return legGroup; };
         const characterLeftLeg = createLegAndShoe(-0.25, 0.05); const characterRightLeg = createLegAndShoe(0.25, -0.05); character.add(characterLeftLeg); character.add(characterRightLeg);
 
-        // --- Controls & State Functions ---
-        const keys = { w: false, a: false, s: false, d: false };
-        let worldZOffset = 0; let isJumping = false; let targetRotationY = 0; let isRotating = false; let lastWalkTick = 0;
-        
-        function setInput(key, state) { if(!isDefeated && !isVictory) keys[key] = state; }
-
-        function updateEnvironmentMode(lvl) {
-            if (lvl % 2 !== 0) { 
-                scene.background.setHex(0x71baf2); scene.fog.color.setHex(0x71baf2);
-                directionalLight.intensity = 1.5; ambientLight.intensity = 0.6;
-                dayGroup.visible = true; nightGroup.visible = false;
-                levelBoard.style.borderColor = "#4CAF50"; levelTitle.style.color = "#4CAF50";
-            } else { 
-                scene.background.setHex(0x0a192f); scene.fog.color.setHex(0x0a192f);
-                directionalLight.intensity = 0.3; ambientLight.intensity = 0.2;
-                dayGroup.visible = false; nightGroup.visible = true;
-                levelBoard.style.borderColor = "#2196F3"; levelTitle.style.color = "#2196F3";
+        // --- Core Setup & Scoring Mechanics ---
+        function checkLevelProgress() {
+            if (score >= targetScore && !isVictory && !isDefeated) {
+                if (currentLevel === 1) {
+                    playSound('levelClear');
+                    window.setLevel(2);
+                    gsap.fromTo(levelTitle, { scale: 1.5, color: "#fff" }, { scale: 1, color: "#ff3333", duration: 1, ease: "bounce.out" });
+                } else if (currentLevel === 2) {
+                    playSound('levelClear');
+                    window.setLevel(3);
+                } else if (currentLevel === 3) {
+                    triggerVictory();
+                }
             }
         }
 
-        // Exposed functions to safely bind logic to HTML without hoisting bugs
+        window.setLevel = function(lvl) {
+            currentLevel = lvl; isOnBike = false;
+            
+            if(bikeGroup) { character.remove(bikeGroup); bikeGroup = null; }
+            characterLeftArm.rotation.set(0.1, 0, -0.3); characterRightArm.rotation.set(0.1, 0, 0.3); 
+            character.rotation.set(0, 0, 0); character.position.y = 0;
+            
+            activeFires.forEach(f => scene.remove(f)); activeFires.length = 0;
+            activeMonsters.forEach(m => scene.remove(m)); activeMonsters.length = 0;
+            activeCollectibles.forEach(c => scene.remove(c)); activeCollectibles.length = 0;
+            activeTraffic.forEach(t => scene.remove(t)); activeTraffic.length = 0;
+            
+            if (lvl === 1) { 
+                targetScore = 300; levelTitle.innerText = "Lvl 1: Sagnik Got Sakti"; levelDesc.innerText = "Collect 300 points to clear"; 
+                buildRoadLines(2); environmentGroup.rotation.x = 0; road.scale.x = 1; roadMat.color.setHex(0x555555); 
+            } 
+            else if (lvl === 2) { 
+                targetScore = 600; levelTitle.innerText = "Lvl 2: Sagnik's Pune Controversy"; levelDesc.innerText = "Survive! (600 pts to win)"; 
+                buildRoadLines(2); environmentGroup.rotation.x = 0; road.scale.x = 1; roadMat.color.setHex(0x555555); 
+            } 
+            else if (lvl === 3) { 
+                targetScore = 1000; levelTitle.innerText = "Lvl 3: Sagnik The Mountain Biker"; levelDesc.innerText = "Traffic! (1000 pts to win)"; 
+                buildRoadLines(3); environmentGroup.rotation.x = 0; road.scale.x = 1.5; roadMat.color.setHex(0x555555); character.rotation.x = 0; 
+                triggerBikeMode();
+            }
+            updateEnvironmentMode(currentLevel);
+        };
+
         window.selectDevice = function(type) {
             initAudio(); 
             isMobileMode = (type === 'mobile');
             deviceScreen.style.display = 'none'; startScreen.style.display = 'flex';
             if (isMobileMode) {
-                document.getElementById('dpad').style.display = 'none'; document.getElementById('joystick-zone').style.display = 'block'; document.getElementById('mobile-actions').style.display = 'flex'; instructionsPanel.innerHTML = "Use On-Screen Buttons";
+                document.getElementById('dpad').style.display = 'none'; document.getElementById('joystick-zone').style.display = 'block'; document.getElementById('mobile-actions').style.display = 'flex'; instructionsPanel.style.display = "block"; instructionsPanel.innerHTML = "Use On-Screen Buttons";
             } else {
-                document.getElementById('dpad').style.display = 'flex'; document.getElementById('joystick-zone').style.display = 'none'; document.getElementById('mobile-actions').style.display = 'none'; instructionsPanel.innerHTML = "Walk: WASD<br>Jump: SPACE<br>Shoot: L-Click<br>Give Cha: 'C' Key";
+                document.getElementById('dpad').style.display = 'flex'; document.getElementById('joystick-zone').style.display = 'none'; document.getElementById('mobile-actions').style.display = 'none'; instructionsPanel.style.display = "block"; instructionsPanel.innerHTML = "Walk: WASD<br>Jump: SPACE<br>Shoot: L-Click<br>Give Cha: 'C' Key";
             }
-            const selectedLvl = parseInt(levelSelect.value); currentLevel = selectedLvl; isOnBike = false;
-            if(bikeGroup) { character.remove(bikeGroup); bikeGroup = null; }
-            characterLeftArm.rotation.set(0.1, 0, -0.3); characterRightArm.rotation.set(0.1, 0, 0.3); character.rotation.set(0, 0, 0); character.position.y = 0;
-            activeFires.forEach(f => scene.remove(f)); activeFires.length = 0;
-            activeMonsters.forEach(m => scene.remove(m)); activeMonsters.length = 0;
-            activeCollectibles.forEach(c => scene.remove(c)); activeCollectibles.length = 0;
-            
-            if (selectedLvl === 1) { score = 0; targetScore = 300; levelTitle.innerText = "Lvl 1: Sagnik Got Sakti"; levelDesc.innerText = "Collect 300 points to clear"; buildRoadLines(2); environmentGroup.rotation.x = 0; road.scale.x = 1; roadMat.color.setHex(0x555555); } 
-            else if (selectedLvl === 2) { score = 300; targetScore = 600; levelTitle.innerText = "Lvl 2: Sagnik's Pune Controversy"; levelDesc.innerText = "Survive! (600 pts to win)"; buildRoadLines(2); environmentGroup.rotation.x = 0; road.scale.x = 1; roadMat.color.setHex(0x555555); } 
-            else if (selectedLvl === 3) { score = 600; targetScore = 1000; levelTitle.innerText = "Lvl 3: Sagnik The Mountain Biker"; levelDesc.innerText = "Bicycle Ride! (1000 pts to win)"; buildRoadLines(3); environmentGroup.rotation.x = 0; road.scale.x = 1.5; roadMat.color.setHex(0x555555); character.rotation.x = 0; }
-            scoreBoard.innerText = "Score: " + score; updateEnvironmentMode(currentLevel);
+            const selectedLvl = parseInt(levelSelect.value);
+            if(selectedLvl === 1) score = 0; if(selectedLvl === 2) score = 300; if(selectedLvl === 3) score = 600;
+            scoreBoard.innerText = "Score: " + score;
+            window.setLevel(selectedLvl);
         };
 
         window.startGame = function() {
             initAudio(); playSound('levelStart'); startScreen.style.display = 'none'; gameHasStarted = true;
-            if (currentLevel === 3) triggerBikeMode();
         };
+
+        // --- Controls & Inputs ---
+        const keys = { w: false, a: false, s: false, d: false };
+        let worldZOffset = 0; let isJumping = false; let targetRotationY = 0; let isRotating = false; let lastWalkTick = 0;
+        
+        function setInput(key, state) { 
+            if(!isDefeated && !isVictory) {
+                if (currentLevel === 3 && state && !keys[key]) {
+                    if (key === 'a') currentLane = Math.max(0, currentLane - 1);
+                    if (key === 'd') currentLane = Math.min(2, currentLane + 1);
+                }
+                keys[key] = state; 
+            }
+        }
 
         function triggerShoot() {
             if(!gameHasStarted || isDefeated || isVictory) return; 
@@ -541,7 +619,9 @@
             } else {
                 proj = new THREE.Mesh(new THREE.SphereGeometry(0.3, 16, 16), projectileMat);
             }
-            proj.position.set(character.position.x + 0.5, 2.5, character.position.z); proj.userData = { speedZ: character.rotation.y > Math.PI/2 ? -0.8 : -0.8 };
+            
+            proj.position.set(character.position.x + 0.5, 2.5, character.position.z);
+            proj.userData = { speedZ: character.rotation.y > Math.PI/2 ? -0.8 : -0.8 };
             scene.add(proj); activeProjectiles.push(proj);
         }
 
@@ -552,7 +632,11 @@
                 let m = activeMonsters[i];
                 if (m.userData.type === 'sayan') { gsap.to(m.scale, {x: 0, y: 0, z: 0, duration: 0.3, onComplete: () => scene.remove(m)}); activeMonsters.splice(i, 1); chaGiven = true; }
             }
-            if (chaGiven) { playSound('monsterDefeat'); score += 30; scoreBoard.innerText = "Score: " + score; showPopup("Cha Given! +30", "#FF9800"); }
+            if (chaGiven) { 
+                playSound('monsterDefeat'); score += 30; scoreBoard.innerText = "Score: " + score; 
+                showPopup("Cha Given! +30", "#FF9800"); 
+                checkLevelProgress();
+            }
         }
 
         function triggerJump() { 
@@ -568,7 +652,9 @@
         function triggerBikeMode() {
             isOnBike = true;
             const bike = createBicycle(); character.add(bike);
-            gsap.to(character.position, {y: 1.5, duration: 0.5}); gsap.to(characterLeftArm.rotation, {x: -0.8, z: 0.1, duration: 0.5}); gsap.to(characterRightArm.rotation, {x: -0.8, z: -0.1, duration: 0.5});
+            gsap.to(character.position, {y: 1.5, duration: 0.5}); 
+            gsap.to(characterLeftArm.rotation, {x: -0.8, z: 0.1, duration: 0.5}); 
+            gsap.to(characterRightArm.rotation, {x: -0.8, z: -0.1, duration: 0.5});
             playSound('levelClear');
         }
 
@@ -586,14 +672,18 @@
         }
 
         window.addEventListener('mousedown', (e) => { if (!isMobileMode && e.button === 0 && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'SELECT') triggerShoot(); });
+        
         window.addEventListener('keydown', (e) => { 
-            const code = e.key.toLowerCase(); if (code === 'w') setInput('w', true); if (code === 'a') setInput('a', true); if (code === 's') setInput('s', true); if (code === 'd') setInput('d', true); 
+            const code = e.key.toLowerCase(); 
+            if (code === 'w') setInput('w', true); if (code === 'a') setInput('a', true); if (code === 's') setInput('s', true); if (code === 'd') setInput('d', true); 
             if (e.code === 'Space') triggerJump(); if (code === 'c') triggerCha();
         });
+        
         window.addEventListener('keyup', (e) => { const code = e.key.toLowerCase(); if (code === 'w') setInput('w', false); if (code === 'a') setInput('a', false); if (code === 's') setInput('s', false); if (code === 'd') setInput('d', false); });
         
         window.addEventListener('wheel', (e) => { 
-            if (isRotating || isDefeated || isVictory || !gameHasStarted) return; isRotating = true; playSound('rotate'); 
+            if (isRotating || isDefeated || isVictory || !gameHasStarted) return; 
+            isRotating = true; playSound('rotate'); 
             if (e.deltaY < 0) targetRotationY -= Math.PI / 2; else targetRotationY += Math.PI / 2; 
             gsap.to(character.rotation, { y: targetRotationY, duration: 0.4, ease: "back.out(1.5)", onComplete: () => { isRotating = false; } }); 
         }, { passive: false });
@@ -604,7 +694,15 @@
         jZone.addEventListener('touchend', (e) => { e.preventDefault(); jActive = false; jStick.style.transform = `translate(0px, 0px)`; setInput('w', false); setInput('a', false); setInput('s', false); setInput('d', false); }, {passive: false});
         function handleJoystick(touch) {
             let dx = touch.clientX - jCenter.x; let dy = touch.clientY - jCenter.y; const maxDist = 50; const dist = Math.hypot(dx, dy); if (dist > maxDist) { dx = (dx/dist)*maxDist; dy = (dy/dist)*maxDist; }
-            jStick.style.transform = `translate(${dx}px, ${dy}px)`; setInput('w', dy < -15); setInput('s', dy > 15); setInput('a', dx < -15); setInput('d', dx > 15);
+            jStick.style.transform = `translate(${dx}px, ${dy}px)`; 
+            
+            if (currentLevel === 3) {
+                if (dx < -25 && !keys.a) setInput('a', true); else if (dx >= -25) setInput('a', false);
+                if (dx > 25 && !keys.d) setInput('d', true); else if (dx <= 25) setInput('d', false);
+            } else {
+                setInput('a', dx < -15); setInput('d', dx > 15);
+            }
+            setInput('w', dy < -15); setInput('s', dy > 15); 
         }
         document.getElementById('btn-w').addEventListener('mousedown', () => setInput('w', true)); document.getElementById('btn-w').addEventListener('mouseup', () => setInput('w', false)); document.getElementById('btn-w').addEventListener('mouseleave', () => setInput('w', false));
         document.getElementById('btn-s').addEventListener('mousedown', () => setInput('s', true)); document.getElementById('btn-s').addEventListener('mouseup', () => setInput('s', false)); document.getElementById('btn-s').addEventListener('mouseleave', () => setInput('s', false));
@@ -631,49 +729,116 @@
 
             if (!isRotating && !isDefeated && !isVictory && gameHasStarted) {
                 let targetFaceY = 0; 
-                if (keys.w) targetFaceY = Math.PI; else if (keys.a) targetFaceY = -Math.PI / 2; else if (keys.d) targetFaceY = Math.PI / 2; 
+                if (keys.w) targetFaceY = Math.PI; 
+                else if (keys.a) targetFaceY = -Math.PI / 2; // Face Left Fix
+                else if (keys.d) targetFaceY = Math.PI / 2; // Face Right Fix
                 character.rotation.y += (targetFaceY - character.rotation.y) * 0.2;
             }
 
-            // Loop Scenery
+            // Loop Scenery Objects smoothly
             for(let i=0; i<activeScenery.length; i++) {
-                let s = activeScenery[i]; s.position.z += speed * (keys.w ? 1 : 0) - speed * (keys.s ? 1 : 0);
-                if(s.position.z > 40) s.position.z -= 380; else if(s.position.z < -340) s.position.z += 380;
+                let s = activeScenery[i];
+                s.position.z += speed * (keys.w ? 1 : 0) - speed * (keys.s ? 1 : 0);
+                if(s.position.z > 40) s.position.z -= 380;
+                else if(s.position.z < -340) s.position.z += 380;
             }
 
             for (let fire of activeFires) { fire.scale.y = 1 + Math.sin(time * 15) * 0.15; fire.scale.x = 1 + Math.cos(time * 10) * 0.05; fire.scale.z = 1 + Math.cos(time * 10) * 0.05; }
 
+            // Projectile Physics
             for(let i = activeProjectiles.length - 1; i >= 0; i--) {
                 let p = activeProjectiles[i]; p.position.z += p.userData.speedZ; 
                 if (p.position.z < -80 || p.position.z > 20) { scene.remove(p); activeProjectiles.splice(i, 1); continue; }
                 
+                // NO FIRE DESTRUCTION - Bullets pass right through!
+
+                // Hit Level 1/2 Monsters
+                let hitMonster = false;
                 for (let j = activeMonsters.length - 1; j >= 0; j--) {
                     let m = activeMonsters[j];
                     if (m.userData.type === 'prachi') {
-                        if (Math.abs(p.position.z - m.position.z) < 3.0) { 
-                            scene.remove(m); activeMonsters.splice(j, 1); scene.remove(p); activeProjectiles.splice(i, 1); 
-                            playSound('monsterDefeat'); score += 20; scoreBoard.innerText = "Score: " + score; 
+                        if (Math.abs(p.position.z - m.position.z) < 3.0) { // Z-axis hit check
+                            scene.remove(m); activeMonsters.splice(j, 1); scene.remove(p); activeProjectiles.splice(i, 1); playSound('monsterDefeat'); score += 20; scoreBoard.innerText = "Score: " + score; 
                             showPopup("Prachi Defeated! +20", "#ff3333");
-                            break;
+                            checkLevelProgress();
+                            hitMonster = true; break;
                         }
                     }
+                }
+                if (hitMonster) continue;
+
+                // Hit Level 3 Traffic
+                for (let j = activeTraffic.length - 1; j >= 0; j--) {
+                    let t = activeTraffic[j];
+                    if (Math.hypot(p.position.x - t.position.x, p.position.z - t.position.z) < 2.5) {
+                        if (t.userData.isFriendly) {
+                            triggerDefeat("Sagnik Found Guilty!");
+                        } else {
+                            scene.remove(t); activeTraffic.splice(j, 1); scene.remove(p); activeProjectiles.splice(i, 1);
+                            playSound('destroy'); score += t.userData.points; scoreBoard.innerText = "Score: " + score;
+                            showPopup(`Car Destroyed! +${t.userData.points}`, "#FFD700");
+                            checkLevelProgress();
+                        }
+                        break;
+                    }
+                }
+            }
+
+            // Animate Sirens on Level 3
+            let flash = Math.floor(time * 8) % 2 === 0;
+            for(let t of activeTraffic) {
+                if(t.userData.type === 'police') {
+                    t.children.forEach(c => {
+                        if(c.userData.isSiren) {
+                            if(c.userData.sirenType === 'red') c.material.color.setHex(flash ? 0xff0000 : 0x550000);
+                            if(c.userData.sirenType === 'blue') c.material.color.setHex(flash ? 0x000055 : 0x0000ff);
+                        }
+                    });
                 }
             }
 
             if (isMoving) { 
                 let zSpeed = 0; if (keys.w) zSpeed = speed; if (keys.s) zSpeed = -speed; worldZOffset -= zSpeed; if (worldZOffset > 0) worldZOffset = 0; 
-                if (keys.w) { distanceTravelled += speed; if (distanceTravelled > nextSpawnDistance) { spawnEntity(); distanceTravelled = 0; nextSpawnDistance = 60 + Math.random() * 40; } } 
+                
+                // Spawner Logic Based on Level
+                if (keys.w) { 
+                    distanceTravelled += speed; 
+                    if (distanceTravelled > nextSpawnDistance) { 
+                        if (currentLevel < 3) spawnEntity(); 
+                        else spawnTraffic();
+                        distanceTravelled = 0; nextSpawnDistance = 60 + Math.random() * 40; 
+                    } 
+                } 
                 
                 let roadBounds = currentLevel === 3 ? 5.5 : 3.5;
-                if (keys.a) character.position.x -= speed; if (keys.d) character.position.x += speed; 
-                if (character.position.x < -roadBounds) character.position.x = -roadBounds; if (character.position.x > roadBounds) character.position.x = roadBounds; 
+                
+                if (currentLevel === 3) {
+                    character.position.x += (LANES[currentLane] - character.position.x) * 0.15;
+                } else {
+                    if (keys.a) character.position.x -= speed; if (keys.d) character.position.x += speed; 
+                    if (character.position.x < -roadBounds) character.position.x = -roadBounds; if (character.position.x > roadBounds) character.position.x = roadBounds; 
+                }
+                
                 environmentGroup.position.z = -worldZOffset % 12; 
                 
+                // Update Traffic (Level 3)
+                for (let i = activeTraffic.length - 1; i >= 0; i--) {
+                    let t = activeTraffic[i]; t.position.z += zSpeed + 0.3; // Moves towards player!
+                    if (!isDefeated) {
+                        if (Math.hypot(character.position.x - t.position.x, character.position.z - t.position.z) < 2.0) {
+                            triggerDefeat("Crushed by Traffic!");
+                        }
+                    }
+                    if (t.position.z > 20) { scene.remove(t); activeTraffic.splice(i, 1); }
+                }
+
                 for (let i = activeMonsters.length - 1; i >= 0; i--) {
                     let m = activeMonsters[i]; m.position.z += zSpeed + 0.15; 
+                    
                     if(m.userData.type === 'prachi') m.position.y = Math.abs(Math.sin(time * 6 + m.userData.jumpOffset)) * 4;
 
                     if (!isJumping && !isDefeated && !isOnBike) {
+                        // Collision check based only on Z axis depth to make dodging impossible
                         if (Math.abs(character.position.z - m.position.z) < 2.0) triggerDefeat(m.userData.type === 'prachi' ? "Prachi Eaten Sagnik" : "Sayan Eaten Sagnik");
                     }
                     if (m.position.z > 10) { scene.remove(m); activeMonsters.splice(i, 1); }
@@ -682,6 +847,7 @@
                 for (let i = activeFires.length - 1; i >= 0; i--) {
                     let fire = activeFires[i]; fire.position.z += zSpeed;
                     if (!isJumping && !isDefeated && !isVictory && !isOnBike) { 
+                        // Collision check based only on Z axis for the Wall of Fire
                         if (Math.abs(fire.position.z) < 1.5) triggerDefeat("Burned in Fire!"); 
                     }
                     if (fire.position.z > 10) { scene.remove(fire); activeFires.splice(i, 1); }
@@ -697,23 +863,8 @@
                         if (item.userData.type === 'villager') { score += 50; playSound('villager'); showPopup("+50 Villager!", "#4CAF50"); } 
                         else { score += 10; playSound('coin'); showPopup("+10 COD Coin!", "#FFD700"); } 
                         
-                        if (score >= targetScore) {
-                            if (currentLevel === 1) {
-                                currentLevel = 2; targetScore = 600; playSound('levelClear');
-                                levelTitle.innerText = "Lvl 2: Sagnik's Pune Controversy"; levelDesc.innerText = "Survive! 600 pts to clear.";
-                                updateEnvironmentMode(currentLevel); buildRoadLines(2); roadMat.color.setHex(0x555555);
-                                gsap.fromTo(levelTitle, { scale: 1.5, color: "#fff" }, { scale: 1, color: "#ff3333", duration: 1, ease: "bounce.out" });
-                            } else if (currentLevel === 2) {
-                                currentLevel = 3; targetScore = 1000; playSound('levelClear');
-                                levelTitle.innerText = "Lvl 3: Sagnik The Mountain Biker"; levelDesc.innerText = "Bicycle Ride! 1000 pts to win.";
-                                updateEnvironmentMode(currentLevel); buildRoadLines(3);
-                                environmentGroup.rotation.x = 0; road.scale.x = 1.5; roadMat.color.setHex(0x555555);
-                                character.rotation.x = 0; triggerBikeMode();
-                            } else if (currentLevel === 3) {
-                                triggerVictory();
-                            }
-                        }
                         scoreBoard.innerText = "Score: " + score; 
+                        checkLevelProgress();
                     } 
                     else if (item.position.z > 10) { scene.remove(item); activeCollectibles.splice(i, 1); } 
                 } 
@@ -738,6 +889,16 @@
             } else { 
                 for(let item of activeCollectibles) { if (item.userData.type === 'villager') { item.rotation.y += 0.03; } else { item.rotation.y += 0.05; } } 
                 
+                for(let t of activeTraffic) {
+                    t.position.z += 0.3; // Traffic continues moving even if player stops
+                    if (!isDefeated) {
+                        if (Math.hypot(character.position.x - t.position.x, character.position.z - t.position.z) < 2.0) {
+                            triggerDefeat("Crushed by Traffic!");
+                        }
+                    }
+                    if (t.position.z > 20) { scene.remove(t); activeTraffic.splice(activeTraffic.indexOf(t), 1); }
+                }
+
                 for(let m of activeMonsters) {
                     m.position.z += 0.15; 
                     if(m.userData.type === 'prachi') m.position.y = Math.abs(Math.sin(time * 6 + m.userData.jumpOffset)) * 4;
